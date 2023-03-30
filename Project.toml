@@ -1,7 +1,7 @@
 name = "FlexExtract"
 uuid = "5ad5ba56-8ec2-41bb-8b56-2065914898b5"
 authors = ["Tristan Carion <tristancarion@gmail.com> and contributors"]
-version = "1.0.0-DEV"
+version = "0.1.0"
 
 [compat]
 julia = "1"
