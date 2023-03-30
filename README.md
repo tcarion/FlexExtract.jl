@@ -24,7 +24,7 @@ FlexExtract.create("testfe")
 
 This will create a new directory called `testfe` with two subdirectories `input` and `output`, as well as a default control file (see the [flex_extract](https://www.flexpart.eu/flex_extract/) documentation for more info about the control file). To check the values of the control file in Julia, type:
 
-```julia-repl
+```julia
 julia> fcontrol = FeControl(fedir)
 OrderedCollections.OrderedDict{Symbol, Any} with 18 entries:
   :START_DATE => "20180809"
