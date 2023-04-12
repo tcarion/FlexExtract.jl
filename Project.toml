@@ -13,11 +13,12 @@ Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 
 [compat]
-julia = "1"
 CSV = "0.10"
+DataStructures = "0.18"
 EcRequests = "0.2"
 FlexExtract_jll = "7.1.2"
 PyCall = "1.95"
+julia = "1"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
