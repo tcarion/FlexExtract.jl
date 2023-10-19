@@ -44,49 +44,14 @@ const PYTHON_EXECUTABLE = PyCall.python
 include("utils.jl")
 
 _default_control(filename) = joinpath(PATH_FLEXEXTRACT_CONTROL_DIR, filename)
-# const ecmwfapi = PyNULL()
-# const ecmwf_public_server = PyNULL()
-# const ecmwf_mars_server = PyNULL()
 
-# const polytopeapi = PyNULL()
-# const polytope_client = PyNULL()
-
-# function __init__()
-#     py"""
-#     import ssl
-#     ssl._create_default_https_context = ssl._create_unverified_context
-#     """
-#     copy!(ecmwfapi, pyimport_conda("ecmwfapi", "ecmwfapi"))
-#     copy!(ecmwf_public_server, ecmwfapi.ECMWFDataServer())
-#     copy!(ecmwf_mars_server, ecmwfapi.ECMWFService("mars"))
-
-#     # Try to import the optional polytope-client package
-#     try
-#         copy!(polytopeapi, pyimport_conda("polytope.api", "polytope"))
-#         copy!(polytope_client, polytopeapi.Client(address = "polytope.ecmwf.int"))
-#         try
-#             # Would be better to simply redirect stdout to devnull, but it doesn't work
-#             tmp_cli = polytopeapi.Client(address = "polytope.ecmwf.int", quiet = true)
-#             # redirect_stdout(devnull) do 
-#             tmp_cli.list_collections()
-#             # end
-#         catch e
-#             if e isa PyCall.PyError
-#                 @warn "It seems you don't have credentials for the polytope api."
-#             else
-#                 throw(e)
-#             end
-#         end
-#     catch
-
-#     end
-
-
-# end
-# const ControlItem = Symbol
-# const ControlFilePath = String
-
-# const ControlFields= OrderedDict{ControlItem, Any}
+function __init()
+    pyimport_conda("ecmwfapi", "ecmwf-api-client", "conda-forge")
+    pyimport_conda("eccodes", "eccodes", "conda-forge")
+    pyimport_conda("genshi", "genshi", "conda-forge")
+    pyimport_conda("numpy", "numpy", "conda-forge")
+    pyimport_conda("cdsapi", "cdsapi", "conda-forge")
+end
 
 abstract type AbstractPathnames end
 

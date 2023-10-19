@@ -8,14 +8,36 @@
 ## Description
 FlexExtract.jl is a package interfacing the [flex_extract](https://www.flexpart.eu/flex_extract/) program in Julia, allowing to retrieve and prepare the ECMWF input meteorological data for the [FLEXPART](https://www.flexpart.eu/) Lagrangian atmospheric dispersion model.
 
-## Getting started
-First, install the package via:
+
+## Installation
+The package is not registered, so you need to install it with:
 
 ```julia
 using Pkg; Pkg.add(url="https://github.com/tcarion/FlexExtract.jl")
 ```
 
-Then, create a default FlexExtract directory in the current directory:
+If you have no pre-existing Conda installation, you might get the following error:
+
+```julia
+[ Info: Precompiling FlexExtract [5ad5ba56-8ec2-41bb-8b56-2065914898b5]
+ERROR: LoadError: InitError: PyError (PyImport_ImportModule
+
+The Python package ecmwfapi could not be imported by pyimport. Usually this means
+that you did not install ecmwfapi in the Python version being used by PyCall.
+```
+
+The simplest way to overcome this is to configure PyCall to use a Julia-specific Python distribution. To do that:
+
+```julia
+ENV["PYTHON"] = ""
+using Pkg
+Pkg.build("PyCall")
+```
+
+Then restart julia, and you should be to import FlexExtract without error.
+
+## Getting started
+First, create a default FlexExtract directory in the current directory:
 
 ```julia
 using FlexExtract
