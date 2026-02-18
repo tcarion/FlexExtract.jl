@@ -1,7 +1,7 @@
 name = "FlexExtract"
 uuid = "5ad5ba56-8ec2-41bb-8b56-2065914898b5"
+version = "0.1.1"
 authors = ["Tristan Carion <tristancarion@gmail.com> and contributors"]
-version = "0.1.0"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
@@ -12,6 +12,7 @@ FlexExtract_jll = "928114cd-b949-50c5-8a7b-63c9d706fec3"
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
+eccodes_jll = "b04048ba-5ccd-5610-b3f6-85129a548705"
 
 [compat]
 CSV = "0.10"
@@ -19,6 +20,7 @@ DataStructures = "0.18"
 EcRequests = "0.2"
 FlexExtract_jll = "7.1.2"
 PyCall = "1.95"
+eccodes_jll = "2.45.0"
 julia = "1"
 
 [extras]

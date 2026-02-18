@@ -9,6 +9,7 @@ using PyCall
 import EcRequests
 using EcRequests: EcRequestType
 using StatsBase
+import eccodes_jll
 
 export 
     FlexExtractDir,
@@ -175,7 +176,10 @@ allrequests(csv::CSV.File) = EcRequests.EcRequest.(collect(csv))
 ferequests(path::String) = allrequests(CSV.File(path, normalizenames= true))
 # MarsRequest(dict::AbstractDict) = MarsRequest(convert(OrderedDict, dict), 1)
 
-adapt_env(cmd) = addenv(cmd, CMD_CALC_ETADOT.env)
+function adapt_env(cmd)
+    cmd = addenv(cmd, CMD_CALC_ETADOT.env)
+    return addenv(cmd, eccodes_jll.grib_set().env)
+end
 function adapt_and_run(cmd)
     cmd_with_new_env = adapt_env(cmd)
     Base.run(cmd_with_new_env)
