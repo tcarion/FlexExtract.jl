@@ -9,6 +9,7 @@ using PyCall
 import EcRequests
 using EcRequests: EcRequestType
 using StatsBase
+import eccodes_jll
 
 export 
     FlexExtractDir,
@@ -29,7 +30,7 @@ const CALC_ETADOT_PARAMETER = :EXEDIR
 const CMD_CALC_ETADOT = FlexExtract_jll.calc_etadot()
 
 const ROOT_ARTIFACT_FLEXEXTRACT = artifact"flex_extract"
-const PATH_FLEXEXTRACT = joinpath(ROOT_ARTIFACT_FLEXEXTRACT, "flex_extract_v7.1.2")
+const PATH_FLEXEXTRACT = joinpath(ROOT_ARTIFACT_FLEXEXTRACT, "flex_extract-7.1.2-mars")
 
 const FLEX_DEFAULT_CONTROL = "CONTROL_OD.OPER.FC.eta.highres"
 const FLEX_ENSEMBLE_CONTROL = "CONTROL_OD.ENFO.PF.36hours"
@@ -175,7 +176,10 @@ allrequests(csv::CSV.File) = EcRequests.EcRequest.(collect(csv))
 ferequests(path::String) = allrequests(CSV.File(path, normalizenames= true))
 # MarsRequest(dict::AbstractDict) = MarsRequest(convert(OrderedDict, dict), 1)
 
-adapt_env(cmd) = addenv(cmd, CMD_CALC_ETADOT.env)
+function adapt_env(cmd)
+    cmd = addenv(cmd, CMD_CALC_ETADOT.env)
+    return addenv(cmd, eccodes_jll.grib_set().env)
+end
 function adapt_and_run(cmd)
     cmd_with_new_env = adapt_env(cmd)
     Base.run(cmd_with_new_env)
