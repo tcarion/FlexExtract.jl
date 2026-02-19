@@ -30,7 +30,7 @@ const CALC_ETADOT_PARAMETER = :EXEDIR
 const CMD_CALC_ETADOT = FlexExtract_jll.calc_etadot()
 
 const ROOT_ARTIFACT_FLEXEXTRACT = artifact"flex_extract"
-const PATH_FLEXEXTRACT = joinpath(ROOT_ARTIFACT_FLEXEXTRACT, "flex_extract_v7.1.2")
+const PATH_FLEXEXTRACT = joinpath(ROOT_ARTIFACT_FLEXEXTRACT, "flex_extract-7.1.2-mars")
 
 const FLEX_DEFAULT_CONTROL = "CONTROL_OD.OPER.FC.eta.highres"
 const FLEX_ENSEMBLE_CONTROL = "CONTROL_OD.ENFO.PF.36hours"
