@@ -1,6 +1,6 @@
 [flex_extract]
-    git-tree-sha1 = "92c325847d54344bf3184a7853d08ba46758c81b"
+    git-tree-sha1 = "6b51e9b264e428b1d9f76dfc8314d7199832f37c"
 
     [[flex_extract.download]]
     url = "https://github.com/barche/flex_extract/archive/refs/tags/v7.1.2-mars.tar.gz"
-    sha256 = "29110c8c67bec8a6f0b973d3d434b41844699883ddb2d72d76baaf5f1f253991"
+    sha256 = "040a97e8a31261a4bb001b78345fb9daea52c70f5eab512b91c3f3acea576a74"
