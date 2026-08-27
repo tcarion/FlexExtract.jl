@@ -33,7 +33,8 @@ const ROOT_ARTIFACT_FLEXEXTRACT = artifact"flex_extract"
 const PATH_FLEXEXTRACT = joinpath(ROOT_ARTIFACT_FLEXEXTRACT, "flex_extract-7.1.2-mars")
 
 const FLEX_DEFAULT_CONTROL = "CONTROL_OD.OPER.FC.eta.highres"
-const FLEX_ENSEMBLE_CONTROL = "CONTROL_OD.ENFO.PF.36hours"
+#const FLEX_ENSEMBLE_CONTROL = "CONTROL_OD.ENFO.PF.36hours"
+const FLEX_ENSEMBLE_CONTROL = "CONTROL_OD.ELDA.FC.eta.ens.double" # Nithin
 const PATH_FLEXEXTRACT_CONTROL_DIR = joinpath(PATH_FLEXEXTRACT, "Run", "Control")
 const PATH_FLEXEXTRACT_DEFAULT_CONTROL = joinpath(PATH_FLEXEXTRACT_CONTROL_DIR, FLEX_DEFAULT_CONTROL)
 
@@ -364,6 +365,39 @@ function set_steps!(fcontrol::FeControl, startdate, enddate, timestep)
             push!(type_ctrl, "AN")
             push!(step_ctrl, 0 |> format_opt)
         end
+
+#Nithin
+    elseif occursin("ELDA", fcontrol[:STREAM])
+        for st in stepdt
+            h = Dates.hour(st)
+
+            if h % 6 == 0
+                push!(type_ctrl, "AN")
+                push!(time_ctrl, h |> format_opt)
+                push!(step_ctrl, 0 |> format_opt)
+            else
+                fc_hour = h < 6 ? 18 : h < 18 ? 6 : 18
+                fc_date = Dates.DateTime(Dates.Date(st)) + Dates.Hour(fc_hour)
+
+                if h < 6
+                    fc_date -= Dates.Day(1)
+                end
+
+                push!(type_ctrl, "FC")
+                push!(time_ctrl, fc_hour |> format_opt)
+
+                step = Dates.Hour(st - fc_date).value
+                push!(step_ctrl, step |> format_opt)
+            end
+        end
+
+        merge!(fcontrol, Dict(
+            :ACCTYPE => "FC",
+            :ACCTIME => "06/18",
+            :ACCMAXSTEP => "12"
+        ))
+#Nithin
+
     elseif occursin("ENFO", fcontrol[:STREAM])
         fc_startdate = enddate - Dates.Hour(36)
         fc_startdate = Dates.floorceil(fc_startdate, Dates.Hour(12))[2]
@@ -376,6 +410,7 @@ function set_steps!(fcontrol::FeControl, startdate, enddate, timestep)
         startdate = fc_startdate
         enddate = startdate
         merge!(fcontrol, Dict(:ACCTIME => time_ctrl[1]))
+
     else
         for st in stepdt
             push!(time_ctrl, div(Dates.Hour(st).value, 12) * 12 |> format_opt)
@@ -409,13 +444,16 @@ end
 set_steps!(fedir::FlexExtractDir, startdate, enddate, timestep) = set_steps!(fedir.control, startdate, enddate, timestep)
 
 function set_ensemble_rest!(fcontrol::FeControl)
-    members = sample(1:50, 9; replace=false)
+    #members = sample(1:50, 9; replace=false)
+    members = 1:10
     new = Dict(
         :NUMBER => join(members, "/"),
         :LEVELIST => "1/to/137",
         :RESOL => 799,
         :FORMAT => "GRIB2",
         :GAUSS => 0,
+        :CWC => 0,
+    
     )
     merge!(fcontrol, new)
 end
