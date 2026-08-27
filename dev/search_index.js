@@ -1,3 +1,3 @@
 var documenterSearchIndex = {"docs":
-[{"location":"#FlexExtract","page":"Home","title":"FlexExtract","text":"Documentation for FlexExtract.\n\n","category":"section"}]
+[{"category":"section","location":"#FlexExtract","page":"Home","text":"Documentation for FlexExtract.\n\n","title":"FlexExtract"}]
 }
